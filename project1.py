@@ -1,3 +1,9 @@
+#Student name: Brianna Hodge
+#Student ID: 50873856
+#email: bmlhodge@umich.edu
+#Collaborators/GenAI: No student collaborators, ChatGPT
+#How I used ChatGPT: Asked Chatgpt what lines in a code chunk was doing from discussion (importing a csv file), gave Chatgpt a few lines of data and asked it to create another example of code for me using the example provided. 
+
 '''
 student info/collaborators/etc
 import libraries 
@@ -10,8 +16,6 @@ define main function that calls in the testcases
 
 import os
 import unittest
-
-
 
 '''
 to write test cases function
