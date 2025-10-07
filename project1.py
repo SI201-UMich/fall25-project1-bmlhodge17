@@ -1,7 +1,7 @@
 #Student name: Brianna Hodge
 #Student ID: 50873856
 #email: bmlhodge@umich.edu
-#Collaborators/GenAI: No student collaborators, ChatGPT
+#Collaborators/GenAI: No student collaborators, ChatGPT, https://www.w3schools.com/python/ref_stat_mean.asp#gsc.tab=0 
 #How I used ChatGPT: Asked Chatgpt what lines in a code chunk was doing from discussion (importing a csv file), gave Chatgpt a few lines of data and asked it to create another example of code for me using the example provided. 
 
 '''
@@ -32,33 +32,45 @@ class TestUnitest(unittest):
         self.assertEqual(a, b) #checks if a and b are equal
         
 '''
+#function returns list of bill lengths for specified species
+def get_species_data(species, csv_file):
+    bill_lengths = []
+    for row in csv_file:
+        if row['species'] == species:
+            bill_lengths.append(float(row['bill_length_mm']))
+    return bill_lengths
+
+#function returns list of penguins gender based on a specified island 
+def get_island_data(island, csv_file):
+    island_sex = []
+    for row in csv_file:
+        if row['island'] == island:
+            island_sex.append(row['sex'])
+    return island_sex
+
 #test two general/usual cases
 #test two edge cases?
 import unittest
+import statistics
 class TestUnittest(unittest.TestCase):
 
-    def setUp(self):
-        
-
     def test_average_bill_length(self):
-        p1 = average_bill_length()
-        p2 = 
+        bill_lengths = get_species_data(self.species, self.csv_file)
+
+        p1 = self.average_length
+        p2 = statistics.mean(bill_lengths)
 
         self.assertEqual(p1, p2)
 
 
-'''
-chatgpt notes about test cases
-Edge Cases: Test with empty lists, lists containing only True, only False, and a mix of both.
-Typical Cases: Include lists with a representative mix of True and False values.
-Floating Point Precision: Account for potential precision issues with assertAlmostEqual when dealing with percentages that are not whole numbers.
-'''
-
     def test_female_percentage(self):
+        island_sex = get_island_data(self.island, self.csv_file)
 
+        i1 = self.female_percentage
+        i2 = 
 
-        self.assertEqual()
-        #should I use assertAlmostEqual if the percentage is a float? 
+        self.assertEqual(i1, i2)
+         
 
 def main():
     unittest.main()
