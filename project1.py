@@ -1,17 +1,17 @@
 #Student name: Brianna Hodge
 #Student ID: 50873856
 #email: bmlhodge@umich.edu
-#Collaborators/GenAI: No student collaborators, ChatGPT, https://www.w3schools.com/python/ref_stat_mean.asp#gsc.tab=0 
+#Collaborators/GenAI: No student collaborators, ChatGPT, office hours
 #How I used ChatGPT: Asked Chatgpt what lines in a code chunk was doing from discussion (importing a csv file), gave Chatgpt a few lines of data and asked it to create another example of code for me using the example provided. 
 
 '''
 x student info/collaborators/etc
 x import libraries 
-create a function to read in penguins csv file, use 'r' 
+x create a function to read in penguins csv file, use 'r' 
 define two analysis functions that create and populate(add key, values to) a dictionary, and calcuates 
 create a function that outputs the results in a new text or csv file (use text for a dictionary, or use csv for calculation/if output looks more like a "list")
 create a class for unittest cases
-define main function that calls in the testcases
+x define main function that calls in the testcases
 '''
 
 import csv
@@ -99,8 +99,6 @@ def get_island_data(island, csv_file):
             island_sex.append(row['sex'])
     return island_sex
 
-#test two general/usual cases
-#test two edge cases?
 
 import unittest
 import statistics
@@ -121,14 +119,14 @@ class TestUnittest(unittest.TestCase):
        'species': 'Chinstrap'}} #usual
         
         #usual
-        self.data2 = 
+        #self.data2 = 
 
         
         #unusual
-        self.data3 = 
+        #self.data3 = 
 
         #unusual 
-        self.data4 = 
+        #self.data4 = 
 
 
     def test_average_bill_length(self):
@@ -137,11 +135,10 @@ class TestUnittest(unittest.TestCase):
 
         self.assertEqual(a, data1_output, 2)
 
-        
+
 
         
 
-        
 
 '''
     def test_average_bill_length(self):
@@ -167,8 +164,7 @@ def main():
 
 if __name__ == '__main__':
     unittest.main()
-'''
+
 d = read_penguins_data('penguins.csv')
 a = average_bill_length(d)
 pprint.pprint(a)
-'''
