@@ -10,12 +10,15 @@ x import libraries
 x create a function to read in penguins csv file, use 'r' 
 define two analysis functions that create and populate(add key, values to) a dictionary, and calcuates 
 create a function that outputs the results in a new text or csv file (use text for a dictionary, or use csv for calculation/if output looks more like a "list")
-create a class for unittest cases
+x create a class for unittest cases
 x define main function that calls in the testcases
 '''
 
 import csv
 import pprint
+import unittest
+import os
+
 
 def read_penguins_data(csv_file):
     base_path = os.path.abspath(os.path.dirname(__file__))
@@ -41,10 +44,6 @@ def read_penguins_data(csv_file):
     return penguins
 
 
-
-import os
-import unittest
-
 def average_bill_length(penguins):
     average_lengths = {}
     count = {} #keys are the species and values are the number of penguins in that species
@@ -66,7 +65,30 @@ def average_bill_length(penguins):
     # example output = {species1 : 10. species2: 20}
 
 def island_female_percentage(penguins):
-    pass
+    island_females = {}
+    for k, v in penguins.items():
+        island = v['island']
+        sex = v['sex']
+    total_female_count(island_females, island, sex)
+    for island, totals in island_females.items():
+        percent_female = totals['num_females'] / totals['total']
+        #write to csv or text file
+    return island_females
+
+
+def total_female_count(island_females, island, sex):
+    if island not in island_females:
+        island_females[island] = {}
+    island_females[island]['total'] = island_females[island].get('total', 0) + 1
+    if sex == 'female':
+        island_females[island]['num_females'] = island_females[island].get('num_females', 0) + 1
+    
+
+#{‘islandname’: {‘total’: 1, ‘num_females’: 0}}
+
+#output (23%) #returns female count//total count x 100
+
+# example output = {island: 23%, island2: 42%}
 
 '''
 to write test cases function
@@ -82,7 +104,7 @@ class TestUnitest(unittest):
         b = 2
         self.assertEqual(a, b) #checks if a and b are equal
         
-'''
+
 #function returns list of bill lengths for specified species
 def get_species_data(species, csv_file):
     bill_lengths = []
@@ -98,13 +120,13 @@ def get_island_data(island, csv_file):
         if row['island'] == island:
             island_sex.append(row['sex'])
     return island_sex
+'''
 
 
-import unittest
-import statistics
 class TestUnittest(unittest.TestCase):
 
     def setUp(self):
+        #usual
         self.data1 =  {342: {'bill_length_mm': 49.6,
        'island': 'Dream',
        'sex': 'male',
@@ -116,7 +138,7 @@ class TestUnittest(unittest.TestCase):
  344: {'bill_length_mm': 50.2,
        'island': 'Dream',
        'sex': 'female',
-       'species': 'Chinstrap'}} #usual
+       'species': 'Chinstrap'}} 
         
         #usual
         #self.data2 = 
@@ -134,10 +156,10 @@ class TestUnittest(unittest.TestCase):
         data1_output = {'Chinstrap': 50.2}
 
         self.assertEqual(a, data1_output, 2)
+        #self.assertEqual()
+        #self.assertEqual()
+        #self.assertEqual()
 
-
-
-        
 
 
 '''
@@ -160,11 +182,17 @@ class TestUnittest(unittest.TestCase):
    
 '''
 def main():
-    unittest.main()
+    d = read_penguins_data('penguins.csv')
+    a = average_bill_length(d)
+    p = island_female_percentage(d)
+    pprint.pprint(a)
+    pprint.pprint(p)
+    #unittest.main()
 
 if __name__ == '__main__':
-    unittest.main()
-
+    main()
+'''
 d = read_penguins_data('penguins.csv')
 a = average_bill_length(d)
 pprint.pprint(a)
+'''
