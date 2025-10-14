@@ -2,7 +2,7 @@
 #Student ID: 50873856
 #email: bmlhodge@umich.edu
 #Collaborators/GenAI: No student collaborators, ChatGPT, office hours
-#How I used ChatGPT: Asked Chatgpt what lines in a code chunk was doing from discussion (importing a csv file), gave Chatgpt a few lines of data and asked it to create another example of code for me using the example provided. 
+#How I used ChatGPT: Asked Chatgpt what lines in a code chunk was doing from discussion (importing a csv file), gave Chatgpt a few lines of data and asked it to create another example of code for me using the example provided. Checked expected test cases output with Chatgpt and asked it to explain my second function code to me in order to debug and make changes. 
 
 '''
 x student info/collaborators/etc
@@ -69,14 +69,20 @@ def island_female_percentage(penguins):
     for k, v in penguins.items():
         island = v['island']
         sex = v['sex']
-    total_female_count(island_females, island, sex)
+    total_female_count(island_females, island, sex) #call helper function total_female_count
+    island_percentages = {}
     for island, totals in island_females.items():
-        percent_female = totals['num_females'] / totals['total']
+        num_females = totals.get('num_females', 0)
+        total = totals['total']
+        percent_female = num_females / total * 100
+        island_percentages[island] = round(percent_female, 2)
+        #percent_female = totals['num_females'] / totals['total']
         #write to csv or text file
-    return island_females
+        return island_percentages
 
 
 def total_female_count(island_females, island, sex):
+#acts as a helper function for island_female_percentage
     if island not in island_females:
         island_females[island] = {}
     island_females[island]['total'] = island_females[island].get('total', 0) + 1
@@ -141,46 +147,146 @@ class TestUnittest(unittest.TestCase):
        'species': 'Chinstrap'}} 
         
         #usual
-        #self.data2 = 
+        self.data2 =  {276: {'bill_length_mm': 49.9,
+       'island': 'Biscoe',
+       'sex': 'male',
+       'species': 'Gentoo'},
+ 277: {'bill_length_mm': 46.5,
+       'island': 'Dream',
+       'sex': 'female',
+       'species': 'Chinstrap'},
+ 278: {'bill_length_mm': 50.0,
+       'island': 'Dream',
+       'sex': 'male',
+       'species': 'Chinstrap'}}
 
-        
         #unusual
-        #self.data3 = 
+        self.data3 =  {188: {'bill_length_mm': NA, #unusual case --> NA for bill length value
+       'island': 'Biscoe',
+       'sex': 'male',
+       'species': 'Gentoo'},
+ 189: {'bill_length_mm': 42.6,
+       'island': 'Biscoe',
+       'sex': 'female',
+       'species': 'Gentoo'},
+ 190: {'bill_length_mm': 44.4,
+       'island': 'Biscoe',
+       'sex': 'male',
+       'species': 'Gento'}, #unusual case --> spelling mistake
+ 191: {'bill_length_mm': 44.0,
+       'island': 'Biscoe',
+       'sex': 'female',
+       'species': 'Gentoo'}}
 
         #unusual 
-        #self.data4 = 
+        self.data4 =  {44: {'bill_length_mm': 44.1,
+      'island': 'Dream',
+      'sex': 'male',
+      'species': 'Adelie'},
+ 45: {'bill_length_mm': NA, #NA value for unusual test case
+      'island': 'Dream',
+      'sex': 'female',
+      'species': 'Adelie'},
+ 46: {'bill_length_mm': 39.6,
+      'island': 'Dream',
+      'sex': 'male',
+      'species': 'adelie'}} #lowercase A
 
 
     def test_average_bill_length(self):
         a = average_bill_length(self.data1)
         data1_output = {'Chinstrap': 50.2}
 
-        self.assertEqual(a, data1_output, 2)
-        #self.assertEqual()
-        #self.assertEqual()
-        #self.assertEqual()
+        b = average_bill_length(self.data2)
+        print(b)
+        data2_output = {'Gentoo': 49.9, 'Chinstrap': 48.25}
+
+        c = average_bill_length(self.data3)
+        data3_output = {'Gentoo': 43.5}
+
+        d = average_bill_length(self.data4)
+        data4_output = {'Adelie': 44.1, 'adelie': 39.6}
+
+        self.assertEqual(a, data1_output, 2) #usual
+        self.assertEqual(b, data2_output, 2) #usual
+        self.assertEqual(c, data3_output, 2) #unusual
+        self.assertEqual(d, data4_output, 2) #unusual
 
 
+    def island_female_percentage(self):
 
-'''
-    def test_average_bill_length(self):
-        bill_lengths = get_species_data(self.species, self.csv_file)
+        def setUp(self):
+            #usual
+            self.percent1 = {1: {'bill_length_mm': 39.1,
+     'island': 'Torgersen',
+     'sex': 'male',
+     'species': 'Adelie'},
+ 2: {'bill_length_mm': 39.5,
+     'island': 'Torgersen',
+     'sex': 'female',
+     'species': 'Adelie'}}
 
-        p1 = self.average_length
-        p2 = statistics.mean(bill_lengths)
+            #usual
+            self.percent2 =  {324: {'bill_length_mm': 49.0,
+       'island': 'Dream',
+       'sex': 'male',
+       'species': 'Chinstrap'},
+ 325: {'bill_length_mm': 51.5,
+       'island': 'Dream',
+       'sex': 'male',
+       'species': 'Chinstrap'},
+ 326: {'bill_length_mm': 49.8,
+       'island': 'Dream',
+       'sex': 'female',
+       'species': 'Chinstrap'}}
 
-        self.assertEqual(p1, p2)
+            #unusual
+            self.percent3 =  {107: {'bill_length_mm': 38.6,
+       'island': 'Biscoe',
+       'sex': 'female',
+       'species': 'Adelie'},
+ 108: {'bill_length_mm': 38.2,
+       'island': 'Biscoe',
+       'sex': 'NA', #NA for unusual test case
+       'species': 'Adelie'},
+ 109: {'bill_length_mm': 38.1,
+       'island': 'Biscoe',
+       'sex': 'femal', #spelled female wrong for unusual test case
+       'species': 'Adelie'}}
+
+            #unusual
+            self.percent4 =  {281: {'bill_length_mm': 52.7,
+       'island': 'Dream',
+       'sex': 'male',
+       'species': 'Chinstrap'},
+ 282: {'bill_length_mm': 45.2,
+       'island': 'Dream',
+       'sex': 'male', #changed to male for unusual test case
+       'species': 'Chinstrap'},
+ 283: {'bill_length_mm': 46.1,
+       'island': 'Dream',
+       'sex': 'fmale', #change spelling for unusual test case
+       'species': 'Chinstrap'}}
 
 
-    def test_female_percentage(self):
-        island_sex = get_island_data(self.island, self.csv_file)
+        percent1 = island_female_percentage(self.percent1)
+        percent1_output = {'Torgersen': 50.0}
 
-        i1 = self.female_percentage
-        i2 = 
+        percent2 = island_female_percentage(self.percent2)
+        percent2_output = {'Dream': 33.33}
 
-        self.assertEqual(i1, i2)
-   
-'''
+        percent3 = island_female_percentage(self.percent3)
+        percent3_output = {'Biscoe': 33.33}
+
+        percent4 = island_female_percentage(self.percent4)
+        percent4_output = {'Dream': 0.0}
+
+        self.assertEqual(percent1, percent1_output, 2) #usual
+        self.assertEqual(percent2, percent2_output, 2) #usual
+        self.assertEqual(percent3, percent3_output, 2) #unusual
+        self.assertEqual(percent4, percent4_output, 2) #unusual
+ 
+
 def main():
     d = read_penguins_data('penguins.csv')
     a = average_bill_length(d)
