@@ -2,7 +2,8 @@
 #Student ID: 50873856
 #email: bmlhodge@umich.edu
 #Collaborators/GenAI: No student collaborators, ChatGPT, office hours
-#How I used ChatGPT: Asked Chatgpt what lines in a code chunk was doing from discussion (importing a csv file), gave Chatgpt a few lines of data and asked it to create another example of code for me using the example provided. Checked expected test cases output with Chatgpt and asked it to explain my second function code to me in order to debug and make changes. 
+#How I used ChatGPT: Asked Chatgpt what lines in a code chunk was doing from discussion (importing a csv file), gave Chatgpt a few lines of data and asked it to create another example of code for me using the example provided. 
+# Checked expected test cases output with Chatgpt and asked it to explain my second function code to me in order to debug and make changes. 
 
 '''
 x student info/collaborators/etc
@@ -97,6 +98,7 @@ def total_female_count(island_females, island, sex):
 # example output = {island: 23%, island2: 42%}
 
 '''
+office hours notes
 to write test cases function
 write four testcases per function (8 total)
 we don't have a function written yet so its a "black box"
@@ -109,23 +111,6 @@ class TestUnitest(unittest):
         a = functionname(6,3)
         b = 2
         self.assertEqual(a, b) #checks if a and b are equal
-        
-
-#function returns list of bill lengths for specified species
-def get_species_data(species, csv_file):
-    bill_lengths = []
-    for row in csv_file:
-        if row['species'] == species:
-            bill_lengths.append(float(row['bill_length_mm']))
-    return bill_lengths
-
-#function returns list of penguins gender based on a specified island 
-def get_island_data(island, csv_file):
-    island_sex = []
-    for row in csv_file:
-        if row['island'] == island:
-            island_sex.append(row['sex'])
-    return island_sex
 '''
 
 
