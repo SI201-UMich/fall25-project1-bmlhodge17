@@ -64,6 +64,15 @@ def average_bill_length(penguins):
     average_lengths = {}
     count = {} #keys are the species and values are the number of penguins in that species
     for k, v in penguins.items():
+        species = v['species']
+        valid_species = ['Adelie', 'Chinstrap', 'Gentoo']
+        if species not in valid_species:
+            continue  
+
+
+        if v['bill_length_mm'] == "NA":
+            continue
+
         if v['species'] not in average_lengths:
             average_lengths[v['species']] = v['bill_length_mm']
             count[v['species']] = 1
@@ -147,7 +156,7 @@ class TestUnittest(unittest.TestCase):
        'species': 'Chinstrap'}}
 
         #unusual
-        self.data3 =  {188: {'bill_length_mm': NA, #unusual case --> NA for bill length value
+        self.data3 =  {188: {'bill_length_mm': "NA", #unusual case --> NA for bill length value
        'island': 'Biscoe',
        'sex': 'male',
        'species': 'Gentoo'},
@@ -158,7 +167,7 @@ class TestUnittest(unittest.TestCase):
  190: {'bill_length_mm': 44.4,
        'island': 'Biscoe',
        'sex': 'male',
-       'species': 'Gento'}, #unusual case --> spelling mistake
+       'species': 'Gento'}, #unusual edge test case --> spelling mistake
  191: {'bill_length_mm': 44.0,
        'island': 'Biscoe',
        'sex': 'female',
@@ -169,14 +178,14 @@ class TestUnittest(unittest.TestCase):
       'island': 'Dream',
       'sex': 'male',
       'species': 'Adelie'},
- 45: {'bill_length_mm': NA, #NA value for unusual test case
+ 45: {'bill_length_mm': "NA", #NA value for unusual edge test case
       'island': 'Dream',
       'sex': 'female',
       'species': 'Adelie'},
  46: {'bill_length_mm': 39.6,
       'island': 'Dream',
       'sex': 'male',
-      'species': 'adelie'}} #lowercase A
+      'species': 'adelie'}} #lowercase A for edge case
 
 
     def test_average_bill_length(self):
@@ -188,15 +197,15 @@ class TestUnittest(unittest.TestCase):
         data2_output = {'Gentoo': 49.9, 'Chinstrap': 48.25}
 
         c = average_bill_length(self.data3)
-        data3_output = {'Gentoo': 43.5}
+        data3_output = {'Gentoo': 43.3}
 
         d = average_bill_length(self.data4)
-        data4_output = {'Adelie': 44.1, 'adelie': 39.6}
+        data4_output = {'Adelie': 44.1}
 
         self.assertEqual(a, data1_output, 2) #usual
         self.assertEqual(b, data2_output, 2) #usual
-        self.assertEqual(c, data3_output, 2) #unusual
-        self.assertEqual(d, data4_output, 2) #unusual
+        self.assertEqual(c, data3_output, 2) #unusual/edge case
+        self.assertEqual(d, data4_output, 2) #unusual/edge case
 
 
     def island_female_percentage(self):
@@ -233,11 +242,11 @@ class TestUnittest(unittest.TestCase):
        'species': 'Adelie'},
  108: {'bill_length_mm': 38.2,
        'island': 'Biscoe',
-       'sex': 'NA', #NA for unusual test case
+       'sex': 'NA', #NA for unusual edge test case
        'species': 'Adelie'},
  109: {'bill_length_mm': 38.1,
        'island': 'Biscoe',
-       'sex': 'femal', #spelled female wrong for unusual test case
+       'sex': 'femal', #spelled female wrong for unusual edge test case
        'species': 'Adelie'}}
 
             #unusual
@@ -247,11 +256,11 @@ class TestUnittest(unittest.TestCase):
        'species': 'Chinstrap'},
  282: {'bill_length_mm': 45.2,
        'island': 'Dream',
-       'sex': 'male', #changed to male for unusual test case
+       'sex': 'male', #changed to male for unusual edge test case
        'species': 'Chinstrap'},
  283: {'bill_length_mm': 46.1,
        'island': 'Dream',
-       'sex': 'fmale', #change spelling for unusual test case
+       'sex': 'fmale', #change spelling for unusual edge test case
        'species': 'Chinstrap'}}
 
 
@@ -269,8 +278,8 @@ class TestUnittest(unittest.TestCase):
 
         self.assertEqual(percent1, percent1_output, 2) #usual
         self.assertEqual(percent2, percent2_output, 2) #usual
-        self.assertEqual(percent3, percent3_output, 2) #unusual
-        self.assertEqual(percent4, percent4_output, 2) #unusual
+        self.assertEqual(percent3, percent3_output, 2) #unusual/edge case
+        self.assertEqual(percent4, percent4_output, 2) #unusual/edge case
  
 
 def main():
