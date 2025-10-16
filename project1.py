@@ -4,6 +4,7 @@
 #Collaborators/GenAI: No student collaborators (worked on project alone), ChatGPT, office hours
 #How I used ChatGPT: Asked Chatgpt what lines in a code chunk was doing from discussion (importing a csv file), gave Chatgpt a few lines of data and asked it to create another example of code for me using the example provided. 
 # Checked expected test cases output with Chatgpt and asked it to explain my second function code to me in order to debug and make changes. Asked Chatgpt to look at a few lines of code to understand which lines were not indented correctly. 
+# Asked for examples of writing to a txt file or new csv 
 
 '''
 x student info/collaborators/etc
@@ -69,7 +70,6 @@ def average_bill_length(penguins):
         if species not in valid_species:
             continue  
 
-
         if v['bill_length_mm'] == "NA":
             continue
 
@@ -118,10 +118,19 @@ def total_female_count(island_females, island, sex):
     
 
 #{‘islandname’: {‘total’: 1, ‘num_females’: 0}}
-
 #output (23%) #returns female count//total count x 100
-
 # example output = {island: 23%, island2: 42%}
+
+
+#function writing results of second calculation to a csv file
+def write_island_percentages_to_csv(percentages, filename="island_female_percentage.csv"):
+   
+    with open(filename, mode="w", newline="") as file:
+        writer = csv.writer(file)
+        writer.writerow(["Island", "Female Percentage"])
+      
+        for island, percent in percentages.items():
+            writer.writerow([island, percent])
 
 
 class TestUnittest(unittest.TestCase):
@@ -289,6 +298,9 @@ def main():
     pprint.pprint(a)
     pprint.pprint(p)
     unittest.main()
+
+    #call function to write island percentages to new csv
+    write_island_percentages_to_csv(p)
 
 if __name__ == '__main__':
     main()
