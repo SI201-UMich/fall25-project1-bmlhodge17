@@ -1,18 +1,33 @@
 #Student name: Brianna Hodge
 #Student ID: 50873856
 #email: bmlhodge@umich.edu
-#Collaborators/GenAI: No student collaborators, ChatGPT, office hours
+#Collaborators/GenAI: No student collaborators (worked on project alone), ChatGPT, office hours
 #How I used ChatGPT: Asked Chatgpt what lines in a code chunk was doing from discussion (importing a csv file), gave Chatgpt a few lines of data and asked it to create another example of code for me using the example provided. 
-# Checked expected test cases output with Chatgpt and asked it to explain my second function code to me in order to debug and make changes. 
+# Checked expected test cases output with Chatgpt and asked it to explain my second function code to me in order to debug and make changes. Asked Chatgpt to look at a few lines of code to understand which lines were not indented correctly. 
 
 '''
 x student info/collaborators/etc
 x import libraries 
 x create a function to read in penguins csv file, use 'r' 
-define two analysis functions that create and populate(add key, values to) a dictionary, and calcuates 
+x define two analysis functions that create and populate(add key, values to) a dictionary, and calcuates 
 create a function that outputs the results in a new text or csv file (use text for a dictionary, or use csv for calculation/if output looks more like a "list")
 x create a class for unittest cases
 x define main function that calls in the testcases
+
+
+office hours notes
+to write test cases function
+write four testcases per function (8 total)
+we don't have a function written yet so its a "black box"
+for testcase function reference discussion 5 SLIDES
+
+https://www.geeksforgeeks.org/python/unit-testing-python-unittest/
+#test example
+class TestUnitest(unittest):
+    def test_functionname(self):
+        a = functionname(6,3)
+        b = 2
+        self.assertEqual(a, b) #checks if a and b are equal
 '''
 
 import csv
@@ -44,7 +59,7 @@ def read_penguins_data(csv_file):
     pprint.pprint(penguins)
     return penguins
 
-
+#calculation 1
 def average_bill_length(penguins):
     average_lengths = {}
     count = {} #keys are the species and values are the number of penguins in that species
@@ -65,27 +80,29 @@ def average_bill_length(penguins):
 
     # example output = {species1 : 10. species2: 20}
 
+#calculation 2
 def island_female_percentage(penguins):
     island_females = {}
     for k, v in penguins.items():
         island = v['island']
         sex = v['sex']
-    total_female_count(island_females, island, sex) #call helper function total_female_count
+        total_female_count(island_females, island, sex) #call helper function total_female_count
+    
     island_percentages = {}
     for island, totals in island_females.items():
         num_females = totals.get('num_females', 0)
         total = totals['total']
         percent_female = num_females / total * 100
         island_percentages[island] = round(percent_female, 2)
-        #percent_female = totals['num_females'] / totals['total']
+
         #write to csv or text file
-        return island_percentages
+    return island_percentages
 
-
+#helper function for calculation 2
 def total_female_count(island_females, island, sex):
 #acts as a helper function for island_female_percentage
     if island not in island_females:
-        island_females[island] = {}
+        island_females[island] = {} #nested dictionary
     island_females[island]['total'] = island_females[island].get('total', 0) + 1
     if sex == 'female':
         island_females[island]['num_females'] = island_females[island].get('num_females', 0) + 1
@@ -96,22 +113,6 @@ def total_female_count(island_females, island, sex):
 #output (23%) #returns female count//total count x 100
 
 # example output = {island: 23%, island2: 42%}
-
-'''
-office hours notes
-to write test cases function
-write four testcases per function (8 total)
-we don't have a function written yet so its a "black box"
-for testcase function reference discussion 5 SLIDES
-
-https://www.geeksforgeeks.org/python/unit-testing-python-unittest/
-#test example
-class TestUnitest(unittest):
-    def test_functionname(self):
-        a = functionname(6,3)
-        b = 2
-        self.assertEqual(a, b) #checks if a and b are equal
-'''
 
 
 class TestUnittest(unittest.TestCase):
@@ -278,7 +279,7 @@ def main():
     p = island_female_percentage(d)
     pprint.pprint(a)
     pprint.pprint(p)
-    #unittest.main()
+    unittest.main()
 
 if __name__ == '__main__':
     main()
